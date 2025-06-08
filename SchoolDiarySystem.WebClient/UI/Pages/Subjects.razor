@@ -1,0 +1,157 @@
+﻿@page "/subjects"
+@inject IApiWrapper ApiWrapper
+
+<h3>Предметы</h3>
+
+<button class="btn btn-primary" @onclick="ShowCreateSubjectModal">Добавить запись</button>
+
+@if (SubjectsList != null)
+{
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Название дисциплины</th>
+                <th>Академический год</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subj in SubjectsList)
+            {
+                <tr>
+                    <td>@subj.Name</td>
+                    <td>@subj.AcademicYear</td>
+                    <td>
+                        <button class="btn btn-warning" @onclick="() => ShowEditSubjectModal(subj)">Редактировать</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteStudent(subj.SubjectId)">Удалить</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<!-- Create Price Modal -->
+<EditForm Model="CreateSubject" OnValidSubmit="CreateSubjectHandler">
+    <DataAnnotationsValidator />
+
+    <div class="modal" tabindex="-1" style="display: @(isCreateModalVisible ? "block" : "none")">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Subject</h5>
+                    <button type="button" class="btn-close" @onclick="CloseCreateModal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="subjectName">Название</label>
+                        <InputText id="subjectName" class="form-control" @bind-Value="CreateSubject.Name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="academicYear">Академический год</label>
+                        <InputNumber id="academicYear" class="form-control" @bind-Value="CreateSubject.AcademicYear" Step="1" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" @onclick="CloseCreateModal">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+<!-- Edit Price Modal -->
+<EditForm Model="EditSubject" OnValidSubmit="EditSubjectHandler">
+    <DataAnnotationsValidator />
+
+    <div class="modal" tabindex="-1" style="display: @(isEditModalVisible ? "block" : "none")">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Subject</h5>
+                    <button type="button" class="btn-close" @onclick="CloseEditModal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="subjectName">Название</label>
+                        <InputText id="subjectName" class="form-control" @bind-Value="EditSubject.Name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="academicYear">Академический год</label>
+                        <InputNumber id="academicYear" class="form-control" @bind-Value="EditSubject.AcademicYear" Step="1" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                    <button type="button" class="btn btn-secondary" @onclick="CloseEditModal">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private IList<SubjectGetDto>? SubjectsList { get; set; }
+    private SubjectPostDto CreateSubject = new SubjectPostDto();
+    private SubjectPostDto EditSubject = new SubjectPostDto();
+    private bool isCreateModalVisible = false;
+    private bool isEditModalVisible = false;
+    private int? EditingRecordId { get; set; }
+
+    private bool IfCash { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        SubjectsList = (await ApiWrapper.GetAllSubjects()).ToList();
+    }
+
+    private void ShowCreateSubjectModal()
+    {
+        CreateSubject = new SubjectPostDto();
+        isCreateModalVisible = true;
+    }
+
+    private void ShowEditSubjectModal(SubjectGetDto student)
+    {
+        EditSubject = new SubjectPostDto()
+        {
+                Name = student.Name,
+                AcademicYear = student.AcademicYear,
+        };
+        isEditModalVisible = true;
+        EditingRecordId = student.SubjectId;
+    }
+
+    private void CloseCreateModal()
+    {
+        isCreateModalVisible = false;
+        CreateSubject = new SubjectPostDto();
+    }
+
+    private void CloseEditModal()
+    {
+        isEditModalVisible = false;
+        EditSubject = new SubjectPostDto();
+    }
+
+    private async Task CreateSubjectHandler()
+    {
+        await ApiWrapper.AddSubject(CreateSubject);
+        SubjectsList = (await ApiWrapper.GetAllSubjects()).ToList();
+        CloseCreateModal();
+    }
+
+    private async Task EditSubjectHandler()
+    {
+        await ApiWrapper.UpdateSubject(EditingRecordId ?? -1, EditSubject);
+        SubjectsList = (await ApiWrapper.GetAllSubjects()).ToList();
+        CloseEditModal();
+    }
+
+    private async Task DeleteStudent(int studentId)
+    {
+        await ApiWrapper.DeleteSubject(studentId);
+        SubjectsList = (await ApiWrapper.GetAllSubjects()).ToList();
+    }
+}

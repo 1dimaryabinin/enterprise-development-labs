@@ -1,0 +1,1417 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "SchoolDiarySystem.Api",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Grade": {
+      "get": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Получает все оценки.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GradeGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GradeGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GradeGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Создает новую оценку.",
+        "requestBody": {
+          "description": "Данные для создания новой оценки.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Возвращает созданную оценку."
+          },
+          "400": {
+            "description": "Если данные оценки некорректны."
+          }
+        }
+      }
+    },
+    "/api/Grade/{id}": {
+      "get": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Получает оценку по идентификатору.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор оценки.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает оценку.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Если оценка не найдена."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Обновляет существующую оценку.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор оценки для обновления.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Обновленные данные оценки.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GradePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает обновленную оценку.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GradeGetDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Если данные оценки некорректны."
+          },
+          "404": {
+            "description": "Если оценка не найдена."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Grade"
+        ],
+        "summary": "Удаляет оценку по идентификатору.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор оценки для удаления.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "Возвращает сообщение об успешном удалении."
+          },
+          "404": {
+            "description": "Если оценка не найдена."
+          }
+        }
+      }
+    },
+    "/api/SchoolClass": {
+      "get": {
+        "tags": [
+          "SchoolClass"
+        ],
+        "summary": "Получает все школьные классы.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SchoolClassGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SchoolClassGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SchoolClassGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "SchoolClass"
+        ],
+        "summary": "Создает новый школьный класс.",
+        "requestBody": {
+          "description": "Данные для создания нового школьного класса.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchoolClassPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchoolClassPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchoolClassPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolClassGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolClassGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolClassGetDto"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Возвращает созданный школьный класс."
+          },
+          "400": {
+            "description": "Если данные школьного класса некорректны."
+          }
+        }
+      }
+    },
+    "/api/SchoolClass/{id}": {
+      "get": {
+        "tags": [
+          "SchoolClass"
+        ],
+        "summary": "Получает школьный класс по идентификатору.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор школьного класса.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает школьный класс.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolClassGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolClassGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolClassGetDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Если школьный класс не найден."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "SchoolClass"
+        ],
+        "summary": "Обновляет существующий школьный класс.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор школьного класса для обновления.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Обновленные данные школьного класса.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchoolClassPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchoolClassPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SchoolClassPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает обновленный школьный класс.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolClassGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolClassGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchoolClassGetDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Если данные школьного класса некорректны."
+          },
+          "404": {
+            "description": "Если школьный класс не найден."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "SchoolClass"
+        ],
+        "summary": "Удаляет школьный класс по идентификатору.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор школьного класса для удаления.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "Возвращает сообщение об успешном удалении."
+          },
+          "404": {
+            "description": "Если школьный класс не найден."
+          }
+        }
+      }
+    },
+    "/api/Student": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Получает всех студентов.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Создает нового студента.",
+        "requestBody": {
+          "description": "Данные для создания нового студента.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Возвращает созданного студента.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Если данные студента некорректны.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Student/{id}": {
+      "get": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Получает студента по идентификатору.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор студента.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает студента.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Если студент не найден.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Обновляет существующего студента.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор студента для обновления.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Обновленные данные студента.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает обновленного студента.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentGetDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Если данные студента некорректны.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Если студент не найден.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Student"
+        ],
+        "summary": "Удаляет студента по идентификатору.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор студента для удаления.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Возвращает сообщение об успешном удалении."
+          },
+          "404": {
+            "description": "Если студент не найден.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Subject": {
+      "get": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Получает все предметы.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectGetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Создает новый предмет.",
+        "requestBody": {
+          "description": "Данные для создания нового предмета.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Если данные предмета некорректны.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Возвращает созданный предмет.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Subject/{id}": {
+      "get": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Получает предмет по идентификатору.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор предмета.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Возвращает предмет.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Если предмет не найден.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Обновляет существующий предмет.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор предмета для обновления.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Обновленные данные предмета.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectPostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Возвращает обновленный предмет.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectGetDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Если данные предмета некорректны.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Если предмет не найден.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Subject"
+        ],
+        "summary": "Удаляет предмет по идентификатору.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Идентификатор предмета для удаления.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Возвращает сообщение об успешном удалении."
+          },
+          "404": {
+            "description": "Если предмет не найден.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GradeGetDto": {
+        "required": [
+          "date",
+          "gradeId",
+          "studentId",
+          "subjectId",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "gradeId": {
+            "type": "integer",
+            "description": "Уникальный идентификатор оценки (первичный ключ).",
+            "format": "int32"
+          },
+          "value": {
+            "type": "integer",
+            "description": "Значение оценки.",
+            "format": "int32"
+          },
+          "studentId": {
+            "type": "integer",
+            "description": "Идентификатор ученика, которому выставлена оценка.",
+            "format": "int32"
+          },
+          "subjectId": {
+            "type": "integer",
+            "description": "Идентификатор предмета, по которому выставлена оценка.",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Ссылка на предмет.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GradePostDto": {
+        "required": [
+          "date",
+          "studentId",
+          "subjectId",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "description": "Значение оценки.",
+            "format": "int32"
+          },
+          "studentId": {
+            "type": "integer",
+            "description": "Идентификатор ученика, которому выставлена оценка.",
+            "format": "int32"
+          },
+          "subjectId": {
+            "type": "integer",
+            "description": "Идентификатор предмета, по которому выставлена оценка.",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "description": "Ссылка на предмет.",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": {}
+      },
+      "SchoolClassGetDto": {
+        "required": [
+          "classId",
+          "letter",
+          "number",
+          "studentId"
+        ],
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "description": "Уникальный идентификатор ученика (первичный ключ).",
+            "format": "int32"
+          },
+          "classId": {
+            "type": "integer",
+            "description": "Уникальный идентификатор класса (первичный ключ).",
+            "format": "int32"
+          },
+          "number": {
+            "type": "integer",
+            "description": "Номер класса (например, 10).",
+            "format": "int32"
+          },
+          "letter": {
+            "type": "string",
+            "description": "Литера класса (например, \"А\").",
+            "nullable": true
+          },
+          "students": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Student"
+            },
+            "description": "Список учеников в классе.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SchoolClassPostDto": {
+        "required": [
+          "letter",
+          "number"
+        ],
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "letter": {
+            "type": "string",
+            "description": "Литера класса (например, \"А\").",
+            "nullable": true
+          },
+          "students": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Student"
+            },
+            "description": "Список учеников в классе.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Student": {
+        "required": [
+          "birthDate",
+          "classId",
+          "fullName",
+          "passport",
+          "studentId"
+        ],
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "passport": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "fullName": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "birthDate": {
+            "maxLength": 100,
+            "type": "string",
+            "format": "date-time"
+          },
+          "classId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentGetDto": {
+        "required": [
+          "birthDate",
+          "classId",
+          "fullName",
+          "passport",
+          "studentId"
+        ],
+        "type": "object",
+        "properties": {
+          "studentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "passport": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "description": "ФИО ученика.",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Дата рождения ученика.",
+            "format": "date-time"
+          },
+          "classId": {
+            "type": "integer",
+            "description": "Идентификатор класса ученика.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StudentPostDto": {
+        "required": [
+          "birthDate",
+          "classId",
+          "fullName",
+          "passport"
+        ],
+        "type": "object",
+        "properties": {
+          "passport": {
+            "type": "string",
+            "description": "Паспортные данные ученика.",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "description": "ФИО ученика.",
+            "nullable": true
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "Дата рождения ученика.",
+            "format": "date-time"
+          },
+          "classId": {
+            "type": "integer",
+            "description": "Идентификатор класса ученика.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectGetDto": {
+        "required": [
+          "academicYear",
+          "name",
+          "subjectId"
+        ],
+        "type": "object",
+        "properties": {
+          "subjectId": {
+            "type": "integer",
+            "description": "Уникальный идентификатор предмета (первичный ключ).",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "description": "Название предмета.",
+            "nullable": true
+          },
+          "academicYear": {
+            "type": "integer",
+            "description": "Год обучения, в котором преподается предмет.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubjectPostDto": {
+        "required": [
+          "academicYear",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Название предмета.",
+            "nullable": true
+          },
+          "academicYear": {
+            "type": "integer",
+            "description": "Год обучения, в котором преподается предмет.",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

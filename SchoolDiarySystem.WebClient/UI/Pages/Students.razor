@@ -1,0 +1,191 @@
+﻿@page "/students"
+@inject IApiWrapper ApiWrapper
+
+<h3>Ученики</h3>
+
+@if (StudentsList == null || SchoolClassesList == null)
+{
+    <p>Загрузка...</p>   
+}
+else{
+    <button class="btn btn-primary" @onclick="ShowCreateStudentModal">Добавить запись</button>
+
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th>Паспортные данные ученика</th>
+                <th>ФИО ученика</th>
+                <th>Дата рождения ученика</th>
+                <th>Id Класса</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var student in StudentsList)
+    {
+                        <tr>
+                            <td>@student.Passport</td>
+                            <td>@student.FullName</td>
+                            <td>@student.BirthDate</td>
+                            <td>@student.ClassId</td>
+                            <td>
+                                <button class="btn btn-warning" @onclick="() => ShowEditStudentModal(student)">Редактировать</button>
+                                <button class="btn btn-danger" @onclick="() => DeleteStudent(student.StudentId)">Удалить</button>
+                            </td>
+                        </tr>
+    }
+        </tbody>
+    </table>
+
+    <!-- Create Student Modal -->
+    <EditForm Model="CreateStudent" OnValidSubmit="CreateStudentHandler">
+        <DataAnnotationsValidator />
+
+        <div class="modal" style="display: @(isCreateModalVisible ? "block" : "none")">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create Student</h5>
+                        <button type="button" class="btn-close" @onclick="CloseCreateModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="studentPasswport">Паспортные данные ученика</label>
+                            <InputText id="studentPasswport" class="form-control" @bind-Value="CreateStudent.Passport" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="fulName">ФИО ученика</label>
+                            <InputText id="fulName" class="form-control" @bind-Value="CreateStudent.FullName" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="birthDate">Дата рождения ученика</label>
+                            <InputDate id="birthDate" class="form-control" @bind-Value="CreateStudent.BirthDate" />
+                        </div>
+                        <div class="mb-3">
+                            <Select @bind-SelectedValue="CreateStudent.ClassId" Label="ClassId">
+                                @foreach (var c in SchoolClassesList)
+                                {
+                                    <SelectItem Value="c.ClassId">@c.Number @c.Letter</SelectItem>
+                                }
+                            </Select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                        <button type="button" class="btn btn-secondary" @onclick="CloseCreateModal">Отмена</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+
+    <!-- Edit Student Modal -->
+    <EditForm Model="EditStudent" OnValidSubmit="EditStudentHandler">
+        <DataAnnotationsValidator />
+
+        <div class="modal" style="display: @(isEditModalVisible ? "block" : "none")">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create Student</h5>
+                        <button type="button" class="btn-close" @onclick="CloseEditModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="studentPasswport">Паспортные данные ученика</label>
+                            <InputText id="studentPasswport" class="form-control" @bind-Value="EditStudent.Passport" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="fulName">ФИО ученика</label>
+                            <InputText id="fulName" class="form-control" @bind-Value="EditStudent.FullName" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="birthDate">Дата рождения ученика</label>
+                            <InputDate id="birthDate" class="form-control" @bind-Value="EditStudent.BirthDate" />
+                        </div>
+                        <div class="mb-3">
+                            <Select @bind-SelectedValue="EditStudent.ClassId" Label="ClassId">
+                                @foreach (var c in SchoolClassesList)
+                                {
+                                    <SelectItem Value="c.ClassId">@c.Number @c.Letter</SelectItem>
+                                }
+                            </Select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Сохранить</button>
+                        <button type="button" class="btn btn-secondary" @onclick="CloseEditModal">Отмена</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+@code {
+    private IList<StudentGetDto>? StudentsList { get; set; } = null;
+    private StudentPostDto CreateStudent = new StudentPostDto();
+    private StudentPostDto EditStudent = new StudentPostDto();
+    private IList<SchoolClassGetDto>? SchoolClassesList { get; set; } = null;
+    private bool isCreateModalVisible = false;
+    private bool isEditModalVisible = false;
+    private int? EditingRecordId { get; set; }
+
+    private bool IfCash { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        StudentsList = (await ApiWrapper.GetAllStudents()).ToList();
+        SchoolClassesList = (await ApiWrapper.GetAllSchoolClasses()).ToList();
+    }
+
+    private void ShowCreateStudentModal()
+    {
+        CreateStudent = new StudentPostDto() { ClassId = SchoolClassesList.First().ClassId};
+        isCreateModalVisible = true;
+    }
+
+    private void ShowEditStudentModal(StudentGetDto student)
+    {
+        EditStudent = new StudentPostDto()
+            {
+                Passport = student.Passport,
+                FullName = student.FullName,
+                BirthDate = student.BirthDate,
+                ClassId = student.ClassId
+            };
+        isEditModalVisible = true;
+        EditingRecordId = student.StudentId;
+    }
+
+    private void CloseCreateModal()
+    {
+        isCreateModalVisible = false;
+        CreateStudent = new StudentPostDto() { ClassId = SchoolClassesList.First().ClassId};;
+    }
+
+    private void CloseEditModal()
+    {
+        isEditModalVisible = false;
+        EditStudent = new StudentPostDto();
+    }
+
+    private async Task CreateStudentHandler()
+    {
+        await ApiWrapper.AddStudent(CreateStudent);
+        StudentsList = (await ApiWrapper.GetAllStudents()).ToList();
+        CloseCreateModal();
+    }
+
+    private async Task EditStudentHandler()
+    {
+        await ApiWrapper.UpdateStudent(EditingRecordId ?? -1, EditStudent);
+        StudentsList = (await ApiWrapper.GetAllStudents()).ToList();
+        CloseEditModal();
+    }
+
+    private async Task DeleteStudent(int studentId)
+    {
+        await ApiWrapper.DeleteStudent(studentId);
+        StudentsList = (await ApiWrapper.GetAllStudents()).ToList();
+    }
+}

@@ -3,12 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolDiarySystem", "SchoolDiarySystem\SchoolDiarySystem.csproj", "{C19E2785-167F-4C32-A4C4-B9E2F37B560B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolDiarySystem.Domain", "SchoolDiarySystem\SchoolDiarySystem.Domain.csproj", "{05B5CCA1-B58F-4624-B085-9DD35AAFC43A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{7FA3C815-CE23-4B7E-83F2-1C924CFF51BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolDiarySystem.Tests", "SchoolDiarySystem.Tests\SchoolDiarySystem.Tests.csproj", "{1C60A1AC-ACEA-4083-8648-5ABACD50FB6A}"
 	ProjectSection(ProjectDependencies) = postProject
-		{C19E2785-167F-4C32-A4C4-B9E2F37B560B} = {C19E2785-167F-4C32-A4C4-B9E2F37B560B}
+		{05B5CCA1-B58F-4624-B085-9DD35AAFC43A} = {05B5CCA1-B58F-4624-B085-9DD35AAFC43A}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolDiarySystem.Api", "SchoolDiarySystem.Api\SchoolDiarySystem.Api.csproj", "{D296CCA2-8F0D-491E-9C49-E2517287847B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolDiarySystem.WebClient", "SchoolDiarySystem.WebClient\SchoolDiarySystem.WebClient.csproj", "{9241E1C9-5BF8-48D2-BA63-B3C324AC8DA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,14 +20,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C19E2785-167F-4C32-A4C4-B9E2F37B560B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C19E2785-167F-4C32-A4C4-B9E2F37B560B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C19E2785-167F-4C32-A4C4-B9E2F37B560B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C19E2785-167F-4C32-A4C4-B9E2F37B560B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7FA3C815-CE23-4B7E-83F2-1C924CFF51BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FA3C815-CE23-4B7E-83F2-1C924CFF51BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FA3C815-CE23-4B7E-83F2-1C924CFF51BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FA3C815-CE23-4B7E-83F2-1C924CFF51BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05B5CCA1-B58F-4624-B085-9DD35AAFC43A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B5CCA1-B58F-4624-B085-9DD35AAFC43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B5CCA1-B58F-4624-B085-9DD35AAFC43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B5CCA1-B58F-4624-B085-9DD35AAFC43A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C60A1AC-ACEA-4083-8648-5ABACD50FB6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C60A1AC-ACEA-4083-8648-5ABACD50FB6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C60A1AC-ACEA-4083-8648-5ABACD50FB6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C60A1AC-ACEA-4083-8648-5ABACD50FB6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D296CCA2-8F0D-491E-9C49-E2517287847B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D296CCA2-8F0D-491E-9C49-E2517287847B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D296CCA2-8F0D-491E-9C49-E2517287847B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D296CCA2-8F0D-491E-9C49-E2517287847B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9241E1C9-5BF8-48D2-BA63-B3C324AC8DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9241E1C9-5BF8-48D2-BA63-B3C324AC8DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9241E1C9-5BF8-48D2-BA63-B3C324AC8DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9241E1C9-5BF8-48D2-BA63-B3C324AC8DA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

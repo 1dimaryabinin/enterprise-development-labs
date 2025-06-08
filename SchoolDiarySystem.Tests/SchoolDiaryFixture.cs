@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using SchoolDiarySystem;
+using SchoolDiarySystem.Domain.Model;
 
-namespace Tests
+namespace SchoolDiarySystem.Tests
 {
     public class SchoolFixture
     {
@@ -13,7 +13,7 @@ namespace Tests
         {
             Repository = new SchoolRepository();
 
-
+            // Добавляем классы
             var class1 = new SchoolClass { ClassId = 1, Number = 10, Letter = "А" };
             var class2 = new SchoolClass { ClassId = 2, Number = 10, Letter = "Б" };
 
@@ -23,7 +23,7 @@ namespace Tests
                 class2
             });
 
-
+            // Добавляем учеников и связываем их с объектами классов
             Repository.Students.AddRange(new List<Student>
             {
                 new Student { StudentId = 1, FullName = "Иванов Иван Иванович", Passport = "1234 567890", BirthDate = new DateTime(2005, 1, 15), ClassId = 1 },
@@ -40,7 +40,7 @@ namespace Tests
 });
 
 
-
+            // Добавляем предметы
             Repository.Subjects.AddRange(new List<Subject>
             {
                 new Subject { SubjectId = 1, Name = "Математика", AcademicYear = 2025 },
@@ -49,7 +49,7 @@ namespace Tests
                 new Subject { SubjectId = 4, Name = "География", AcademicYear = 2025 }
             });
 
-            
+            // Добавляем оценки
             Repository.Grades.AddRange(new List<Grade>
             {
                 new Grade { GradeId = 1, StudentId = 1, SubjectId = 1, Date = DateTime.Now, Value = 4 },
@@ -69,6 +69,12 @@ namespace Tests
                 new Grade { GradeId = 13, StudentId = 3, SubjectId = 3, Date = DateTime.Now.AddDays(-2), Value = 4 },
                 new Grade { GradeId = 14, StudentId = 4, SubjectId = 3, Date = DateTime.Now.AddDays(-3), Value = 4 },
                 new Grade { GradeId = 15, StudentId = 5, SubjectId = 3, Date = DateTime.Now, Value = 5 },
+
+                new Grade { GradeId = 16, StudentId = 6, SubjectId = 4, Date = DateTime.Now, Value = 5 },
+                new Grade { GradeId = 17, StudentId = 7, SubjectId = 4, Date = DateTime.Now.AddDays(-1), Value = 4 },
+                new Grade { GradeId = 18, StudentId = 8, SubjectId = 4, Date = DateTime.Now.AddDays(-2), Value = 4 },
+                new Grade { GradeId = 19, StudentId = 9, SubjectId = 4, Date = DateTime.Now, Value = 4 },
+                new Grade { GradeId = 20, StudentId = 10, SubjectId = 4, Date = DateTime.Now, Value = 5 }
             });
         }
     }

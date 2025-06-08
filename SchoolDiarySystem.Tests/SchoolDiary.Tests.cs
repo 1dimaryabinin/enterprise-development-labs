@@ -1,17 +1,28 @@
 ﻿using System;
 using System.Linq;
 using Xunit;
-using SchoolDiarySystem;
+using SchoolDiarySystem.Domain.Model;
 
-namespace Tests
+namespace SchoolDiarySystem.Tests
 {
+    /// <summary>
+    /// Класс тестов для SchoolRepository с использованием фикстуры данных
+    /// </summary>
     public class SchoolRepositoryTests : IClassFixture<SchoolFixture>
     {
         private readonly SchoolRepository _repository;
+
+        /// <summary>
+        /// Инициализация тестов с использованием SchoolFixture
+        /// </summary>
         public SchoolRepositoryTests(SchoolFixture fixture)
         {
             _repository = fixture.Repository;
         }
+
+        /// <summary>
+        /// Тест для вывода информации обо всех предметах
+        /// </summary>
         [Fact]
         public void Test_GetAllSubjects()
         {
@@ -23,6 +34,9 @@ namespace Tests
             Assert.Equal(4, subjects.Count); // Ожидается 4 предмета
         }
 
+        /// <summary>
+        /// Тест для вывода информации обо всех учениках в указанном классе
+        /// </summary>
         [Fact]
         public void Test_GetStudentsByClass()
         {
@@ -34,6 +48,9 @@ namespace Tests
             Assert.Equal(5, students.Count); // Ожидается 5 учеников в классе 10А
         }
 
+        /// <summary>
+        /// Тест для вывода информации обо всех учениках, получивших оценки в указанный день
+        /// </summary>
         [Fact]
         public void Test_GetStudentsWithGradesOnDate()
         {
@@ -48,6 +65,9 @@ namespace Tests
             Assert.Contains(students, s => s.FullName == "Иванов Иван Иванович");
         }
 
+        /// <summary>
+        /// Тест для вывода топ-5 учеников по среднему баллу
+        /// </summary>
         [Fact]
         public void Test_GetTop5StudentsByAverageGrade()
         {
@@ -59,6 +79,9 @@ namespace Tests
             Assert.True(topStudents.Count <= 5, "Результат должен содержать не более 5 учеников.");
         }
 
+        /// <summary>
+        /// Тест для вывода учеников с максимальным средним баллом за указанный период
+        /// </summary>
         [Fact]
         public void Test_GetStudentsWithMaxAverageGrade()
         {
@@ -74,6 +97,9 @@ namespace Tests
             Assert.Contains(students, s => s.Student.FullName == "Петров Петр Петрович");
         }
 
+        /// <summary>
+        /// Тест для вывода информации о минимальном, среднем и максимальном балле по каждому предмету
+        /// </summary>
         [Fact]
         public void Test_GetGradeStatisticsBySubject()
         {
