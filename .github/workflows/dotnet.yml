@@ -21,9 +21,9 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore SchoolDiarySystem/SchoolDiarySystem.csproj
+      run: dotnet restore SchoolDiarySystem/SchoolDiarySystem.Domain.csproj
     - name: Build main project
-      run: dotnet build SchoolDiarySystem/SchoolDiarySystem.csproj --no-restore
+      run: dotnet build SchoolDiarySystem/SchoolDiarySystem.Domain.csproj --no-restore
     - name: Restore test project
       run: dotnet restore Tests/Tests.csproj
     - name: Build test project   
